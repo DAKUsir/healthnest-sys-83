@@ -8,6 +8,7 @@ import Layout from "./components/layout/Layout";
 import Dashboard from "./pages/Dashboard";
 import PatientsPage from "./pages/Patients";
 import AppointmentsPage from "./pages/Appointments";
+import NewAppointment from "./pages/Appointments/NewAppointment";
 import DoctorsPage from "./pages/Doctors";
 import BillingPage from "./pages/Billing";
 import MedicalRecordsPage from "./pages/Records";
@@ -29,6 +30,7 @@ const App = () => (
             <Route path="/" element={<Dashboard />} />
             <Route path="/patients" element={<PatientsPage />} />
             <Route path="/appointments" element={<AppointmentsPage />} />
+            <Route path="/appointments/new" element={<NewAppointment />} />
             <Route path="/doctors" element={<DoctorsPage />} />
             <Route path="/records" element={<MedicalRecordsPage />} />
             <Route path="/billing" element={<BillingPage />} />
