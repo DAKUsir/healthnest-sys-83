@@ -1,6 +1,5 @@
-
 import { Button } from "@/components/ui/button";
-import { Calendar, FileMedical, Phone, UserRound } from "lucide-react";
+import { Calendar, FileText, Phone, UserRound } from "lucide-react";
 import { Patient } from "@/types/patient";
 
 interface PatientCardProps {
@@ -66,7 +65,7 @@ const PatientCard = ({
           className="flex-1"
           onClick={() => onViewDetails?.(patient.id)}
         >
-          <FileMedical className="mr-1.5 h-3.5 w-3.5" />
+          <FileText className="mr-1.5 h-3.5 w-3.5" />
           Records
         </Button>
         <Button

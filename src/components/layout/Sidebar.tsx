@@ -1,7 +1,7 @@
 
 import { 
   CalendarDays, 
-  FileMedical, 
+  FileText, 
   LayoutDashboard, 
   Receipt, 
   Settings, 
@@ -22,7 +22,7 @@ const sidebarLinks = [
   { name: "Patients", path: "/patients", icon: <UserRound className="h-5 w-5" /> },
   { name: "Doctors", path: "/doctors", icon: <Stethoscope className="h-5 w-5" /> },
   { name: "Appointments", path: "/appointments", icon: <CalendarDays className="h-5 w-5" /> },
-  { name: "Medical Records", path: "/records", icon: <FileMedical className="h-5 w-5" /> },
+  { name: "Medical Records", path: "/records", icon: <FileText className="h-5 w-5" /> },
   { name: "Billing", path: "/billing", icon: <Receipt className="h-5 w-5" /> },
   { name: "Staff", path: "/staff", icon: <Users className="h-5 w-5" /> },
   { name: "Settings", path: "/settings", icon: <Settings className="h-5 w-5" /> },
