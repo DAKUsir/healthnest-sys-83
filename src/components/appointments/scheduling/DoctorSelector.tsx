@@ -2,36 +2,54 @@
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { UseFormReturn } from "react-hook-form";
-import { AppointmentFormValues } from "../../schema";
-import { mockDoctors } from "../../data";
 
-interface DoctorFieldProps {
-  form: UseFormReturn<AppointmentFormValues>;
-  onDoctorChange: (value: string) => void;
+interface Doctor {
+  id: string;
+  name: string;
+  department: string;
 }
 
-export const DoctorField = ({ form, onDoctorChange }: DoctorFieldProps) => {
+interface DoctorSelectorProps {
+  form: UseFormReturn<any>;
+  doctors: Doctor[];
+  name?: string;
+  label?: string;
+  placeholder?: string;
+  onDoctorChange?: (value: string) => void;
+  disabled?: boolean;
+}
+
+export const DoctorSelector = ({
+  form,
+  doctors,
+  name = "doctorId",
+  label = "Doctor",
+  placeholder = "Select a doctor",
+  onDoctorChange,
+  disabled = false,
+}: DoctorSelectorProps) => {
   return (
     <FormField
       control={form.control}
-      name="doctorId"
+      name={name}
       render={({ field }) => (
         <FormItem>
-          <FormLabel>Doctor</FormLabel>
+          <FormLabel>{label}</FormLabel>
           <Select
             onValueChange={(value) => {
               field.onChange(value);
-              onDoctorChange(value);
+              if (onDoctorChange) onDoctorChange(value);
             }}
             value={field.value}
+            disabled={disabled}
           >
             <FormControl>
               <SelectTrigger>
-                <SelectValue placeholder="Select a doctor" />
+                <SelectValue placeholder={placeholder} />
               </SelectTrigger>
             </FormControl>
             <SelectContent>
-              {mockDoctors.map((doctor) => (
+              {doctors.map((doctor) => (
                 <SelectItem key={doctor.id} value={doctor.id}>
                   {doctor.name} - {doctor.department}
                 </SelectItem>

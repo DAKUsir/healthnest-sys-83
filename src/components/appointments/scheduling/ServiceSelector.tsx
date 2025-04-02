@@ -2,32 +2,43 @@
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { UseFormReturn } from "react-hook-form";
-import { AppointmentFormValues } from "../../schema";
-import { mockServices } from "../../data";
 
-interface ServiceFieldProps {
-  form: UseFormReturn<AppointmentFormValues>;
+interface ServiceSelectorProps {
+  form: UseFormReturn<any>;
+  services: string[];
+  name?: string;
+  label?: string;
+  placeholder?: string;
+  disabled?: boolean;
 }
 
-export const ServiceField = ({ form }: ServiceFieldProps) => {
+export const ServiceSelector = ({
+  form,
+  services,
+  name = "service",
+  label = "Service",
+  placeholder = "Select a service",
+  disabled = false,
+}: ServiceSelectorProps) => {
   return (
     <FormField
       control={form.control}
-      name="service"
+      name={name}
       render={({ field }) => (
         <FormItem>
-          <FormLabel>Service</FormLabel>
+          <FormLabel>{label}</FormLabel>
           <Select
             onValueChange={field.onChange}
             value={field.value}
+            disabled={disabled}
           >
             <FormControl>
               <SelectTrigger>
-                <SelectValue placeholder="Select a service" />
+                <SelectValue placeholder={placeholder} />
               </SelectTrigger>
             </FormControl>
             <SelectContent>
-              {mockServices.map((service) => (
+              {services.map((service) => (
                 <SelectItem key={service} value={service}>
                   {service}
                 </SelectItem>

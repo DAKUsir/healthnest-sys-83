@@ -1,7 +1,3 @@
 
-export * from './PatientField';
-export * from './DoctorField';
-export * from './ServiceField';
-export * from './DateField';
-export * from './TimeField';
-export * from './NotesField';
+// Re-export from the new scheduling components
+export * from '@/components/appointments/scheduling';

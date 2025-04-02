@@ -1,26 +1,35 @@
 
-import { FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
+import { FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { cn } from "@/lib/utils";
 import { CalendarIcon } from "lucide-react";
 import { format } from "date-fns";
-import { cn } from "@/lib/utils";
 import { UseFormReturn } from "react-hook-form";
-import { AppointmentFormValues } from "../../schema";
 
-interface DateFieldProps {
-  form: UseFormReturn<AppointmentFormValues>;
+interface AppointmentDatePickerProps {
+  form: UseFormReturn<any>;
+  name?: string;
+  label?: string;
+  placeholder?: string;
+  disabled?: boolean;
 }
 
-export const DateField = ({ form }: DateFieldProps) => {
+export const AppointmentDatePicker = ({
+  form,
+  name = "date",
+  label = "Date",
+  placeholder = "Select a date",
+  disabled = false,
+}: AppointmentDatePickerProps) => {
   return (
     <FormField
       control={form.control}
-      name="date"
+      name={name}
       render={({ field }) => (
         <FormItem className="flex flex-col">
-          <FormLabel>Date</FormLabel>
+          <FormLabel>{label}</FormLabel>
           <Popover>
             <PopoverTrigger asChild>
               <FormControl>
@@ -30,11 +39,12 @@ export const DateField = ({ form }: DateFieldProps) => {
                     "w-full pl-3 text-left font-normal",
                     !field.value && "text-muted-foreground"
                   )}
+                  disabled={disabled}
                 >
                   {field.value ? (
                     format(field.value, "PPP")
                   ) : (
-                    <span>Select a date</span>
+                    <span>{placeholder}</span>
                   )}
                   <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
                 </Button>
