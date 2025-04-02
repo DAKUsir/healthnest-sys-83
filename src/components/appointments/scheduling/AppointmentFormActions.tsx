@@ -31,7 +31,13 @@ export const AppointmentFormActions = ({
       <Button 
         type="submit" 
         disabled={isSubmitting}
-        onClick={onSubmit}
+        onClick={onSubmit ? (e) => {
+          // If onSubmit is provided, prevent form submission and call onSubmit directly
+          if (onSubmit) {
+            e.preventDefault();
+            onSubmit();
+          }
+        } : undefined}
       >
         {isSubmitting ? "Submitting..." : submitLabel}
       </Button>

@@ -18,6 +18,7 @@ import {
   Activity,
   CalendarClock,
   DollarSign,
+  FileText,
   Pill,
   PlusCircle,
   UserRound,
@@ -35,6 +36,30 @@ const Dashboard = () => {
     toast({
       title: "Create Appointment",
       description: "You can now create a new appointment.",
+    });
+  };
+
+  const handleNewPatient = () => {
+    navigate("/patients/new");
+    toast({
+      title: "Add New Patient",
+      description: "You can now add a new patient."
+    });
+  };
+
+  const handleNewPrescription = () => {
+    navigate("/records/prescription/new");
+    toast({
+      title: "Create Prescription",
+      description: "You can now create a new prescription."
+    });
+  };
+
+  const handleNewBill = () => {
+    navigate("/billing/new");
+    toast({
+      title: "Create New Bill",
+      description: "You can now create a new bill."
     });
   };
 
@@ -220,15 +245,23 @@ const Dashboard = () => {
               </CardDescription>
             </CardHeader>
             <CardContent>
-              <div className="text-center py-10">
-                <CalendarClock className="mx-auto h-12 w-12 text-muted-foreground" />
-                <h3 className="mt-2 text-lg font-medium">Appointments Management</h3>
-                <p className="mt-1 text-sm text-muted-foreground">
-                  This section will be implemented in the next phase.
-                </p>
-                <Button className="mt-4" onClick={() => navigate('/appointments')}>
-                  Go to Full Appointments Page
-                </Button>
+              <div className="flex flex-col space-y-4">
+                <div className="flex justify-end">
+                  <Button onClick={handleNewAppointment}>
+                    <PlusCircle className="mr-2 h-4 w-4" />
+                    Schedule New Appointment
+                  </Button>
+                </div>
+                <div className="text-center py-10">
+                  <CalendarClock className="mx-auto h-12 w-12 text-muted-foreground" />
+                  <h3 className="mt-2 text-lg font-medium">Appointments Management</h3>
+                  <p className="mt-1 text-sm text-muted-foreground">
+                    This section will be implemented in the next phase.
+                  </p>
+                  <Button className="mt-4" onClick={() => navigate('/appointments')}>
+                    Go to Full Appointments Page
+                  </Button>
+                </div>
               </div>
             </CardContent>
           </Card>
@@ -243,15 +276,33 @@ const Dashboard = () => {
               </CardDescription>
             </CardHeader>
             <CardContent>
-              <div className="text-center py-10">
-                <Users className="mx-auto h-12 w-12 text-muted-foreground" />
-                <h3 className="mt-2 text-lg font-medium">Patient Records</h3>
-                <p className="mt-1 text-sm text-muted-foreground">
-                  This section will be implemented in the next phase.
-                </p>
-                <Button className="mt-4" onClick={() => navigate('/patients')}>
-                  Go to Full Patients Page
-                </Button>
+              <div className="flex flex-col space-y-4">
+                <div className="flex justify-end">
+                  <Button onClick={handleNewPatient}>
+                    <PlusCircle className="mr-2 h-4 w-4" />
+                    Add New Patient
+                  </Button>
+                </div>
+                <div className="flex justify-between mt-4">
+                  <Button variant="outline" onClick={handleNewPrescription}>
+                    <FileText className="mr-2 h-4 w-4" />
+                    Create Prescription
+                  </Button>
+                  <Button variant="outline" onClick={handleNewBill}>
+                    <DollarSign className="mr-2 h-4 w-4" />
+                    Create New Bill
+                  </Button>
+                </div>
+                <div className="text-center py-10">
+                  <Users className="mx-auto h-12 w-12 text-muted-foreground" />
+                  <h3 className="mt-2 text-lg font-medium">Patient Records</h3>
+                  <p className="mt-1 text-sm text-muted-foreground">
+                    This section will be implemented in the next phase.
+                  </p>
+                  <Button className="mt-4" onClick={() => navigate('/patients')}>
+                    Go to Full Patients Page
+                  </Button>
+                </div>
               </div>
             </CardContent>
           </Card>
