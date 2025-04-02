@@ -10,6 +10,8 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Appointment } from "@/types/appointment";
+import { useNavigate } from "react-router-dom";
+import { toast } from "sonner";
 
 interface AppointmentListProps {
   appointments: Appointment[];
@@ -20,6 +22,8 @@ const AppointmentList = ({
   appointments,
   isLoading = false,
 }: AppointmentListProps) => {
+  const navigate = useNavigate();
+
   const getStatusColor = (status: string) => {
     switch (status) {
       case "scheduled":
@@ -33,6 +37,24 @@ const AppointmentList = ({
       default:
         return "bg-gray-100 text-gray-800";
     }
+  };
+
+  const handleViewDetails = (appointmentId: string) => {
+    toast.info(`Viewing appointment details for ID: ${appointmentId}`);
+    // Future implementation can navigate to a detailed view
+    // navigate(`/appointments/${appointmentId}`);
+  };
+
+  const handleReschedule = (appointmentId: string) => {
+    toast.info(`Rescheduling appointment ID: ${appointmentId}`);
+    // Ideally this would open a reschedule dialog or navigate to reschedule page
+  };
+
+  const handleCancel = (appointmentId: string) => {
+    toast.success(`Appointment ID: ${appointmentId} has been cancelled`, {
+      description: "The appointment has been removed from the schedule"
+    });
+    // In a real app, this would call an API to update the appointment status
   };
 
   if (isLoading) {
@@ -121,9 +143,16 @@ const AppointmentList = ({
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end" className="w-40">
-                  <DropdownMenuItem>View details</DropdownMenuItem>
-                  <DropdownMenuItem>Reschedule</DropdownMenuItem>
-                  <DropdownMenuItem className="text-destructive">
+                  <DropdownMenuItem onClick={() => handleViewDetails(appointment.id)}>
+                    View details
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => handleReschedule(appointment.id)}>
+                    Reschedule
+                  </DropdownMenuItem>
+                  <DropdownMenuItem 
+                    className="text-destructive"
+                    onClick={() => handleCancel(appointment.id)}
+                  >
                     Cancel
                   </DropdownMenuItem>
                 </DropdownMenuContent>

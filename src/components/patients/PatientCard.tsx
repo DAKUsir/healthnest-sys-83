@@ -1,6 +1,9 @@
+
 import { Button } from "@/components/ui/button";
 import { Calendar, FileText, Phone, UserRound } from "lucide-react";
 import { Patient } from "@/types/patient";
+import { useNavigate } from "react-router-dom";
+import { toast } from "sonner";
 
 interface PatientCardProps {
   patient: Patient;
@@ -13,6 +16,27 @@ const PatientCard = ({
   onViewDetails,
   onEditPatient,
 }: PatientCardProps) => {
+  const navigate = useNavigate();
+  
+  const handleViewRecords = (patientId: string) => {
+    if (onViewDetails) {
+      onViewDetails(patientId);
+    } else {
+      toast.info(`Viewing medical records for patient: ${patient.name}`);
+      navigate(`/records?patientId=${patientId}`);
+    }
+  };
+  
+  const handleViewDetails = (patientId: string) => {
+    if (onEditPatient) {
+      onEditPatient(patientId);
+    } else {
+      toast.info(`Viewing details for patient: ${patient.name}`);
+      // In a full implementation, this would navigate to a patient details page
+      // navigate(`/patients/${patientId}`);
+    }
+  };
+
   return (
     <div className="rounded-lg border bg-card p-4 shadow-sm transition-all hover:shadow-md">
       <div className="flex items-start justify-between">
@@ -63,7 +87,7 @@ const PatientCard = ({
           variant="outline"
           size="sm"
           className="flex-1"
-          onClick={() => onViewDetails?.(patient.id)}
+          onClick={() => handleViewRecords(patient.id)}
         >
           <FileText className="mr-1.5 h-3.5 w-3.5" />
           Records
@@ -72,7 +96,7 @@ const PatientCard = ({
           variant="default"
           size="sm"
           className="flex-1"
-          onClick={() => onEditPatient?.(patient.id)}
+          onClick={() => handleViewDetails(patient.id)}
         >
           View Details
         </Button>

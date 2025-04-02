@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { z } from "zod";
@@ -42,7 +41,6 @@ import { Textarea } from "@/components/ui/textarea";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
 
-// Mock data for doctors and services
 const mockDoctors = [
   { id: "d1", name: "Dr. John Smith", department: "Cardiology" },
   { id: "d2", name: "Dr. Sarah Johnson", department: "Neurology" },
@@ -74,7 +72,6 @@ const timeSlots = [
   "04:00 PM",
 ];
 
-// Form schema
 const appointmentSchema = z.object({
   patientName: z.string().min(2, "Patient name is required"),
   patientId: z.string().optional(),
@@ -94,7 +91,6 @@ const NewAppointment = () => {
   const navigate = useNavigate();
   const [selectedDoctor, setSelectedDoctor] = useState<string | undefined>();
   
-  // Initialize form
   const form = useForm<AppointmentValues>({
     resolver: zodResolver(appointmentSchema),
     defaultValues: {
@@ -106,21 +102,21 @@ const NewAppointment = () => {
     },
   });
 
-  // Handle form submission
   const onSubmit = (values: AppointmentValues) => {
-    // Here you would normally make an API call to save the appointment
     console.log("Appointment values:", values);
     
-    // Show success message
     toast.success("Appointment scheduled successfully", {
       description: `Appointment with ${getDoctorName(values.doctorId)} on ${format(values.date, "PPP")} at ${values.time}`,
     });
     
-    // Navigate back to appointments page
     navigate("/appointments");
   };
 
-  // Get doctor name by ID
+  const handleCancel = () => {
+    toast.info("Appointment scheduling cancelled");
+    navigate("/appointments");
+  };
+
   const getDoctorName = (doctorId: string) => {
     const doctor = mockDoctors.find(d => d.id === doctorId);
     return doctor ? doctor.name : "Unknown Doctor";
@@ -130,7 +126,7 @@ const NewAppointment = () => {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <h1 className="text-2xl font-semibold">Schedule New Appointment</h1>
-        <Button variant="outline" onClick={() => navigate("/appointments")}>
+        <Button variant="outline" onClick={handleCancel}>
           Cancel
         </Button>
       </div>
@@ -146,7 +142,6 @@ const NewAppointment = () => {
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
               <div className="grid gap-6 md:grid-cols-2">
-                {/* Patient Information */}
                 <FormField
                   control={form.control}
                   name="patientName"
@@ -161,7 +156,6 @@ const NewAppointment = () => {
                   )}
                 />
 
-                {/* Doctor Selection */}
                 <FormField
                   control={form.control}
                   name="doctorId"
@@ -193,7 +187,6 @@ const NewAppointment = () => {
                   )}
                 />
 
-                {/* Service */}
                 <FormField
                   control={form.control}
                   name="service"
@@ -222,7 +215,6 @@ const NewAppointment = () => {
                   )}
                 />
 
-                {/* Date Picker */}
                 <FormField
                   control={form.control}
                   name="date"
@@ -254,7 +246,6 @@ const NewAppointment = () => {
                             selected={field.value}
                             onSelect={field.onChange}
                             disabled={(date) => {
-                              // Disable days in the past and weekends
                               const today = new Date();
                               today.setHours(0, 0, 0, 0);
                               const day = date.getDay();
@@ -269,7 +260,6 @@ const NewAppointment = () => {
                   )}
                 />
 
-                {/* Time Selection */}
                 <FormField
                   control={form.control}
                   name="time"
@@ -332,7 +322,7 @@ const NewAppointment = () => {
                 <Button
                   type="button"
                   variant="outline"
-                  onClick={() => navigate("/appointments")}
+                  onClick={handleCancel}
                 >
                   Cancel
                 </Button>
