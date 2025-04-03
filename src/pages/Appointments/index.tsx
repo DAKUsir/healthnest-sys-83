@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -30,7 +29,6 @@ const AppointmentsPage = () => {
   const [statusFilter, setStatusFilter] = useState("all");
   const [appointments, setAppointments] = useState<Appointment[]>(mockAppointments);
 
-  // Filter appointments based on search term and status
   const filteredAppointments = appointments.filter(
     (appointment) =>
       (appointment.patientName.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -56,7 +54,6 @@ const AppointmentsPage = () => {
     );
     setAppointments(updatedAppointments);
     
-    // Also update the mockAppointments for persistence between renders
     const mockIndex = mockAppointments.findIndex(appt => appt.id === updatedAppointment.id);
     if (mockIndex !== -1) {
       mockAppointments[mockIndex] = updatedAppointment;

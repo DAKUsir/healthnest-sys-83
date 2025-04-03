@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -68,10 +67,28 @@ const AppointmentList = ({
   };
 
   const handleCancel = (appointmentId: string) => {
-    toast.success(`Appointment ID: ${appointmentId} has been cancelled`, {
-      description: "The appointment has been removed from the schedule"
+    // Find the appointment to cancel
+    const appointmentToCancel = appointments.find(app => app.id === appointmentId);
+    
+    if (!appointmentToCancel) {
+      toast.error("Appointment not found");
+      return;
+    }
+    
+    // Create a cancelled version of the appointment
+    const cancelledAppointment: Appointment = {
+      ...appointmentToCancel,
+      status: 'cancelled'
+    };
+    
+    // Update the appointment through the callback
+    if (onAppointmentUpdated) {
+      onAppointmentUpdated(cancelledAppointment);
+    }
+    
+    toast.success(`Appointment with ${cancelledAppointment.patientName} has been cancelled`, {
+      description: `The appointment scheduled for ${cancelledAppointment.date} at ${cancelledAppointment.time} has been cancelled.`
     });
-    // In a real app, this would call an API to update the appointment status
   };
 
   if (isLoading) {

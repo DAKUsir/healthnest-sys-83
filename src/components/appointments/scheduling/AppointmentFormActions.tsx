@@ -12,6 +12,7 @@ interface AppointmentFormActionsProps {
 }
 
 export const AppointmentFormActions = ({
+  form,
   onCancel,
   onSubmit,
   submitLabel = "Schedule Appointment",
@@ -31,6 +32,7 @@ export const AppointmentFormActions = ({
       <Button 
         type="submit" 
         disabled={isSubmitting}
+        onClick={onSubmit}
       >
         {isSubmitting ? "Submitting..." : submitLabel}
       </Button>
