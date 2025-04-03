@@ -22,14 +22,16 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Calendar, Plus, Search } from "lucide-react";
 import { mockAppointments } from "@/data/mockData";
 import AppointmentList from "@/components/appointments/AppointmentList";
+import { Appointment } from "@/types/appointment";
 
 const AppointmentsPage = () => {
   const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState("");
   const [statusFilter, setStatusFilter] = useState("all");
+  const [appointments, setAppointments] = useState<Appointment[]>(mockAppointments);
 
   // Filter appointments based on search term and status
-  const filteredAppointments = mockAppointments.filter(
+  const filteredAppointments = appointments.filter(
     (appointment) =>
       (appointment.patientName.toLowerCase().includes(searchTerm.toLowerCase()) ||
         appointment.doctorName.toLowerCase().includes(searchTerm.toLowerCase())) &&
@@ -46,6 +48,19 @@ const AppointmentsPage = () => {
 
   const handleNewAppointment = () => {
     navigate("/appointments/new");
+  };
+
+  const handleAppointmentUpdated = (updatedAppointment: Appointment) => {
+    const updatedAppointments = appointments.map(appt => 
+      appt.id === updatedAppointment.id ? updatedAppointment : appt
+    );
+    setAppointments(updatedAppointments);
+    
+    // Also update the mockAppointments for persistence between renders
+    const mockIndex = mockAppointments.findIndex(appt => appt.id === updatedAppointment.id);
+    if (mockIndex !== -1) {
+      mockAppointments[mockIndex] = updatedAppointment;
+    }
   };
 
   return (
@@ -110,7 +125,10 @@ const AppointmentsPage = () => {
                   </p>
                 </div>
               ) : (
-                <AppointmentList appointments={upcomingAppointments} />
+                <AppointmentList 
+                  appointments={upcomingAppointments} 
+                  onAppointmentUpdated={handleAppointmentUpdated}
+                />
               )}
             </TabsContent>
             
@@ -124,7 +142,10 @@ const AppointmentsPage = () => {
                   </p>
                 </div>
               ) : (
-                <AppointmentList appointments={completedAppointments} />
+                <AppointmentList 
+                  appointments={completedAppointments}
+                  onAppointmentUpdated={handleAppointmentUpdated}
+                />
               )}
             </TabsContent>
             
@@ -148,7 +169,10 @@ const AppointmentsPage = () => {
                   </Button>
                 </div>
               ) : (
-                <AppointmentList appointments={filteredAppointments} />
+                <AppointmentList 
+                  appointments={filteredAppointments}
+                  onAppointmentUpdated={handleAppointmentUpdated}
+                />
               )}
             </TabsContent>
           </Tabs>
@@ -156,7 +180,7 @@ const AppointmentsPage = () => {
         {filteredAppointments.length > 0 && (
           <CardFooter className="flex justify-between border-t px-6 py-4">
             <div className="text-sm text-muted-foreground">
-              Showing {filteredAppointments.length} of {mockAppointments.length} appointments
+              Showing {filteredAppointments.length} of {appointments.length} appointments
             </div>
           </CardFooter>
         )}

@@ -1,7 +1,8 @@
 
+import { useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Calendar, Clock, MoreVertical, UserRound } from "lucide-react";
+import { Calendar, Clock, Edit, MoreVertical, UserRound } from "lucide-react";
 import { cn } from "@/lib/utils";
 import {
   DropdownMenu,
@@ -12,17 +13,22 @@ import {
 import { Appointment } from "@/types/appointment";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
+import { EditAppointmentDialog } from "./EditAppointmentDialog";
 
 interface AppointmentListProps {
   appointments: Appointment[];
   isLoading?: boolean;
+  onAppointmentUpdated?: (updatedAppointment: Appointment) => void;
 }
 
 const AppointmentList = ({
   appointments,
   isLoading = false,
+  onAppointmentUpdated,
 }: AppointmentListProps) => {
   const navigate = useNavigate();
+  const [selectedAppointment, setSelectedAppointment] = useState<Appointment | null>(null);
+  const [editDialogOpen, setEditDialogOpen] = useState(false);
 
   const getStatusColor = (status: string) => {
     switch (status) {
@@ -43,6 +49,17 @@ const AppointmentList = ({
     toast.info(`Viewing appointment details for ID: ${appointmentId}`);
     // Future implementation can navigate to a detailed view
     // navigate(`/appointments/${appointmentId}`);
+  };
+
+  const handleEdit = (appointment: Appointment) => {
+    setSelectedAppointment(appointment);
+    setEditDialogOpen(true);
+  };
+
+  const handleSaveAppointment = (updatedAppointment: Appointment) => {
+    if (onAppointmentUpdated) {
+      onAppointmentUpdated(updatedAppointment);
+    }
   };
 
   const handleReschedule = (appointmentId: string) => {
@@ -135,7 +152,15 @@ const AppointmentList = ({
                 {appointment.service}
               </p>
             </div>
-            <div className="ml-auto">
+            <div className="ml-auto flex items-center">
+              <Button 
+                variant="ghost" 
+                size="sm"
+                className="mr-2"
+                onClick={() => handleEdit(appointment)}
+              >
+                <Edit className="h-4 w-4" />
+              </Button>
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <Button variant="ghost" size="sm">
@@ -161,6 +186,13 @@ const AppointmentList = ({
           </div>
         </div>
       ))}
+      
+      <EditAppointmentDialog 
+        appointment={selectedAppointment}
+        open={editDialogOpen}
+        onOpenChange={setEditDialogOpen}
+        onSave={handleSaveAppointment}
+      />
     </div>
   );
 };
