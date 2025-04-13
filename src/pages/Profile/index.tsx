@@ -55,7 +55,7 @@ const ProfilePage = () => {
               <div className="w-full space-y-2">
                 <div className="flex items-center gap-2 text-sm">
                   <Mail className="h-4 w-4 text-muted-foreground" />
-                  <span>james.wilson@healthnest.com</span>
+                  <span>kartikeypanwar@gmail.com</span>
                 </div>
                 <div className="flex items-center gap-2 text-sm">
                   <Phone className="h-4 w-4 text-muted-foreground" />
@@ -112,7 +112,7 @@ const ProfilePage = () => {
                     <Input 
                       id="email"
                       type="email"
-                      defaultValue="james.wilson@healthnest.com"
+                      defaultValue="kartikeypanwar@gmail.com"
                       disabled={!isEditing}
                     />
                   </div>
