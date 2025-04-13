@@ -12,8 +12,16 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Eye, EyeOff, Lock, Mail } from "lucide-react";
+import { Eye, EyeOff, Lock, Mail, ArrowLeft } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 
 const LoginPage = () => {
   const navigate = useNavigate();
@@ -22,6 +30,12 @@ const LoginPage = () => {
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  
+  // Password reset states
+  const [forgotPasswordOpen, setForgotPasswordOpen] = useState(false);
+  const [resetEmail, setResetEmail] = useState("");
+  const [resetEmailSent, setResetEmailSent] = useState(false);
+  const [isResetting, setIsResetting] = useState(false);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -46,6 +60,31 @@ const LoginPage = () => {
         });
       }
     }, 1000);
+  };
+
+  const handleResetPassword = (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsResetting(true);
+
+    // Simulate API call for password reset
+    setTimeout(() => {
+      setIsResetting(false);
+      setResetEmailSent(true);
+      
+      toast({
+        title: "Reset link sent",
+        description: `If an account exists for ${resetEmail}, you will receive a password reset link`,
+      });
+    }, 1500);
+  };
+
+  const closeForgotPassword = () => {
+    setForgotPasswordOpen(false);
+    // Reset the forgot password dialog state after it's closed
+    setTimeout(() => {
+      setResetEmail("");
+      setResetEmailSent(false);
+    }, 300);
   };
 
   return (
@@ -86,6 +125,7 @@ const LoginPage = () => {
                   variant="link"
                   className="h-auto px-0 text-xs"
                   type="button"
+                  onClick={() => setForgotPasswordOpen(true)}
                 >
                   Forgot password?
                 </Button>
@@ -128,6 +168,76 @@ const LoginPage = () => {
           </CardFooter>
         </form>
       </Card>
+
+      {/* Forgot Password Dialog */}
+      <Dialog open={forgotPasswordOpen} onOpenChange={closeForgotPassword}>
+        <DialogContent className="sm:max-w-[425px]">
+          <DialogHeader>
+            <DialogTitle>
+              {resetEmailSent ? "Check your email" : "Reset your password"}
+            </DialogTitle>
+            <DialogDescription>
+              {resetEmailSent
+                ? "We've sent you a link to reset your password."
+                : "Enter your email address and we'll send you a link to reset your password."}
+            </DialogDescription>
+          </DialogHeader>
+          
+          {!resetEmailSent ? (
+            <form onSubmit={handleResetPassword} className="space-y-4 py-4">
+              <div className="space-y-2">
+                <Label htmlFor="reset-email">Email</Label>
+                <div className="relative">
+                  <Mail className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+                  <Input
+                    id="reset-email"
+                    type="email"
+                    placeholder="your@email.com"
+                    value={resetEmail}
+                    onChange={(e) => setResetEmail(e.target.value)}
+                    className="pl-10"
+                    required
+                  />
+                </div>
+              </div>
+              <DialogFooter className="pt-4">
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={closeForgotPassword}
+                >
+                  Cancel
+                </Button>
+                <Button type="submit" disabled={isResetting}>
+                  {isResetting ? "Sending..." : "Send reset link"}
+                </Button>
+              </DialogFooter>
+            </form>
+          ) : (
+            <div className="space-y-6 py-6">
+              <div className="flex justify-center">
+                <div className="rounded-full bg-green-100 p-3">
+                  <Mail className="h-6 w-6 text-green-600" />
+                </div>
+              </div>
+              <p className="text-center text-sm text-muted-foreground">
+                We've sent a password reset link to <strong>{resetEmail}</strong>. 
+                Please check your inbox and follow the instructions to reset your password.
+              </p>
+              <div className="flex justify-center">
+                <Button
+                  type="button"
+                  variant="default"
+                  className="mt-2"
+                  onClick={closeForgotPassword}
+                >
+                  Return to login
+                </Button>
+              </div>
+            </div>
+          )}
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
