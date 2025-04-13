@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
@@ -47,10 +46,10 @@ const ProfilePage = () => {
             <div className="flex flex-col items-center space-y-4">
               <Avatar className="h-24 w-24">
                 <AvatarImage src="/placeholder.svg" alt="Profile picture" />
-                <AvatarFallback>DR</AvatarFallback>
+                <AvatarFallback>KP</AvatarFallback>
               </Avatar>
               <div className="text-center">
-                <h2 className="text-xl font-semibold">Dr. James Wilson</h2>
+                <h2 className="text-xl font-semibold">Kartikey Panwar</h2>
                 <p className="text-sm text-muted-foreground">Chief Medical Officer</p>
               </div>
               <div className="w-full space-y-2">
@@ -96,7 +95,7 @@ const ProfilePage = () => {
                     <Label htmlFor="firstName">First Name</Label>
                     <Input 
                       id="firstName"
-                      defaultValue="James"
+                      defaultValue="Kartikey"
                       disabled={!isEditing}
                     />
                   </div>
@@ -104,7 +103,7 @@ const ProfilePage = () => {
                     <Label htmlFor="lastName">Last Name</Label>
                     <Input 
                       id="lastName"
-                      defaultValue="Wilson"
+                      defaultValue="Panwar"
                       disabled={!isEditing}
                     />
                   </div>
