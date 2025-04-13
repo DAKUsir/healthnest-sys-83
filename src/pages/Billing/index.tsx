@@ -19,7 +19,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
-import { DownloadCloud, FileText, Plus, Search, UserRound } from "lucide-react";
+import { DownloadCloud, FileText, Plus, Search, UserRound, IndianRupee } from "lucide-react";
 import { mockBills } from "@/data/mockData";
 import { cn } from "@/lib/utils";
 
@@ -147,7 +147,10 @@ const BillingPage = () => {
                       </td>
                       <td className="py-3">{bill.date}</td>
                       <td className="py-3 text-right">
-                        ${bill.total.toFixed(2)}
+                        <div className="flex items-center justify-end">
+                          <IndianRupee className="h-3.5 w-3.5 mr-1" />
+                          {bill.total.toFixed(2)}
+                        </div>
                       </td>
                       <td className="py-3 text-center">
                         <Badge
@@ -190,8 +193,8 @@ const BillingPage = () => {
             <div className="text-sm text-muted-foreground">
               Showing {filteredBills.length} of {mockBills.length} bills
             </div>
-            <div className="text-sm font-medium">
-              Total: ${filteredBills.reduce((sum, bill) => sum + bill.total, 0).toFixed(2)}
+            <div className="text-sm font-medium flex items-center">
+              Total: <IndianRupee className="h-3.5 w-3.5 mx-1" />{filteredBills.reduce((sum, bill) => sum + bill.total, 0).toFixed(2)}
             </div>
           </CardFooter>
         )}

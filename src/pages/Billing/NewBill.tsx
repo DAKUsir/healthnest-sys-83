@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
@@ -31,7 +30,7 @@ import {
 } from "@/components/ui/table";
 import { AppointmentFormActions } from "@/components/appointments/scheduling";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { Trash, Plus, FileText } from "lucide-react";
+import { Trash, Plus, FileText, IndianRupee } from "lucide-react";
 
 interface BillItem {
   id: string;
@@ -84,7 +83,6 @@ const NewBill = () => {
       if (item.id === id) {
         const updatedItem = { ...item, [field]: value };
         
-        // Recalculate amount if quantity or unitPrice changes
         if (field === "quantity" || field === "unitPrice") {
           updatedItem.amount = updatedItem.quantity * updatedItem.unitPrice;
         }
@@ -108,7 +106,6 @@ const NewBill = () => {
 
     setIsSubmitting(true);
     
-    // Simulate API call
     setTimeout(() => {
       setIsSubmitting(false);
       toast.success("Bill created successfully");
@@ -174,15 +171,24 @@ const NewBill = () => {
                       <tr key={item.id} className="border-b">
                         <td className="py-2">{item.description || "Item Description"}</td>
                         <td className="py-2 text-right">{item.quantity}</td>
-                        <td className="py-2 text-right">${item.unitPrice.toFixed(2)}</td>
-                        <td className="py-2 text-right">${item.amount.toFixed(2)}</td>
+                        <td className="py-2 text-right" className="flex items-center justify-end">
+                          <IndianRupee className="h-3.5 w-3.5 mr-1" />
+                          {item.unitPrice.toFixed(2)}
+                        </td>
+                        <td className="py-2 text-right" className="flex items-center justify-end">
+                          <IndianRupee className="h-3.5 w-3.5 mr-1" />
+                          {item.amount.toFixed(2)}
+                        </td>
                       </tr>
                     ))}
                   </tbody>
                   <tfoot>
                     <tr>
                       <td colSpan={3} className="py-2 text-right font-medium">Total:</td>
-                      <td className="py-2 text-right font-medium">${calculateTotal().toFixed(2)}</td>
+                      <td className="py-2 text-right font-medium flex items-center justify-end">
+                        <IndianRupee className="h-3.5 w-3.5 mr-1" />
+                        {calculateTotal().toFixed(2)}
+                      </td>
                     </tr>
                   </tfoot>
                 </table>
@@ -316,18 +322,24 @@ const NewBill = () => {
                         />
                       </TableCell>
                       <TableCell className="text-right">
-                        <Input
-                          type="number"
-                          min="0"
-                          step="0.01"
-                          placeholder="Price"
-                          value={item.unitPrice}
-                          onChange={(e) => updateItem(item.id, "unitPrice", parseFloat(e.target.value) || 0)}
-                          className="w-24 text-right"
-                        />
+                        <div className="flex items-center justify-end">
+                          <IndianRupee className="h-3.5 w-3.5 mr-1" />
+                          <Input
+                            type="number"
+                            min="0"
+                            step="0.01"
+                            placeholder="Price"
+                            value={item.unitPrice}
+                            onChange={(e) => updateItem(item.id, "unitPrice", parseFloat(e.target.value) || 0)}
+                            className="w-24 text-right"
+                          />
+                        </div>
                       </TableCell>
                       <TableCell className="text-right font-medium">
-                        ${item.amount.toFixed(2)}
+                        <div className="flex items-center justify-end">
+                          <IndianRupee className="h-3.5 w-3.5 mr-1" />
+                          {item.amount.toFixed(2)}
+                        </div>
                       </TableCell>
                       <TableCell>
                         <Button
@@ -346,7 +358,10 @@ const NewBill = () => {
                       Total:
                     </TableCell>
                     <TableCell className="text-right font-medium">
-                      ${calculateTotal().toFixed(2)}
+                      <div className="flex items-center justify-end">
+                        <IndianRupee className="h-3.5 w-3.5 mr-1" />
+                        {calculateTotal().toFixed(2)}
+                      </div>
                     </TableCell>
                     <TableCell></TableCell>
                   </TableRow>

@@ -17,7 +17,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
   Activity,
   CalendarClock,
-  DollarSign,
+  IndianRupee,
   FileText,
   Pill,
   PlusCircle,
@@ -109,8 +109,8 @@ const Dashboard = () => {
             />
             <StatsCard
               title="Revenue"
-              value={`$${dashboardStats.totalRevenue.toLocaleString()}`}
-              icon={<DollarSign className="h-5 w-5" />}
+              value={`₹${dashboardStats.totalRevenue.toLocaleString()}`}
+              icon={<IndianRupee className="h-5 w-5" />}
               trend={{ value: dashboardStats.revenueGrowth, isPositive: true }}
               description="Last 30 days"
             />
@@ -289,7 +289,7 @@ const Dashboard = () => {
                     Create Prescription
                   </Button>
                   <Button variant="outline" onClick={handleNewBill}>
-                    <DollarSign className="mr-2 h-4 w-4" />
+                    <IndianRupee className="mr-2 h-4 w-4" />
                     Create New Bill
                   </Button>
                 </div>

@@ -1,7 +1,7 @@
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, CalendarPlus, ClipboardList, UserPlus, Activity, HeartPulse } from "lucide-react";
+import { ArrowRight, CalendarPlus, ClipboardList, UserPlus, Activity, HeartPulse, IndianRupee } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 const Index = () => {
