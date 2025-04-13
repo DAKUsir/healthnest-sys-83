@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
@@ -171,13 +172,17 @@ const NewBill = () => {
                       <tr key={item.id} className="border-b">
                         <td className="py-2">{item.description || "Item Description"}</td>
                         <td className="py-2 text-right">{item.quantity}</td>
-                        <td className="py-2 text-right" className="flex items-center justify-end">
-                          <IndianRupee className="h-3.5 w-3.5 mr-1" />
-                          {item.unitPrice.toFixed(2)}
+                        <td className="py-2 text-right">
+                          <div className="flex items-center justify-end">
+                            <IndianRupee className="h-3.5 w-3.5 mr-1" />
+                            {item.unitPrice.toFixed(2)}
+                          </div>
                         </td>
-                        <td className="py-2 text-right" className="flex items-center justify-end">
-                          <IndianRupee className="h-3.5 w-3.5 mr-1" />
-                          {item.amount.toFixed(2)}
+                        <td className="py-2 text-right">
+                          <div className="flex items-center justify-end">
+                            <IndianRupee className="h-3.5 w-3.5 mr-1" />
+                            {item.amount.toFixed(2)}
+                          </div>
                         </td>
                       </tr>
                     ))}
@@ -185,9 +190,11 @@ const NewBill = () => {
                   <tfoot>
                     <tr>
                       <td colSpan={3} className="py-2 text-right font-medium">Total:</td>
-                      <td className="py-2 text-right font-medium flex items-center justify-end">
-                        <IndianRupee className="h-3.5 w-3.5 mr-1" />
-                        {calculateTotal().toFixed(2)}
+                      <td className="py-2 text-right font-medium">
+                        <div className="flex items-center justify-end">
+                          <IndianRupee className="h-3.5 w-3.5 mr-1" />
+                          {calculateTotal().toFixed(2)}
+                        </div>
                       </td>
                     </tr>
                   </tfoot>
