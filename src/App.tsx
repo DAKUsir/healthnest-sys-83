@@ -17,6 +17,7 @@ import MedicalRecordsPage from "./pages/Records";
 import NewPrescription from "./pages/Records/NewPrescription";
 import StaffPage from "./pages/Staff";
 import SettingsPage from "./pages/Settings";
+import ProfilePage from "./pages/Profile";
 import LoginPage from "./pages/Login";
 import NotFound from "./pages/NotFound";
 
@@ -44,6 +45,7 @@ const App = () => (
             <Route path="/billing/new" element={<NewBill />} />
             <Route path="/staff" element={<StaffPage />} />
             <Route path="/settings" element={<SettingsPage />} />
+            <Route path="/profile" element={<ProfilePage />} />
           </Route>
           
           <Route path="*" element={<NotFound />} />

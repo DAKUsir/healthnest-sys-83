@@ -1,4 +1,3 @@
-
 import { Bell, HelpCircle, Menu, User } from "lucide-react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
@@ -58,6 +57,7 @@ const Header = ({ toggleSidebar }: HeaderProps) => {
   ]);
   
   const [helpDialogOpen, setHelpDialogOpen] = useState(false);
+  const [profileDialogOpen, setProfileDialogOpen] = useState(false);
   const navigate = useNavigate();
   
   const unreadCount = notifications.filter(n => !n.read).length;
@@ -79,6 +79,10 @@ const Header = ({ toggleSidebar }: HeaderProps) => {
       notification.id === id ? { ...notification, read: true } : notification
     );
     setNotifications(updatedNotifications);
+  };
+  
+  const handleProfileClick = () => {
+    navigate("/profile");
   };
   
   return (
@@ -182,7 +186,7 @@ const Header = ({ toggleSidebar }: HeaderProps) => {
           <DropdownMenuContent align="end" className="w-56">
             <DropdownMenuLabel>My Account</DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <DropdownMenuItem onClick={() => navigate("/profile")}>Profile</DropdownMenuItem>
+            <DropdownMenuItem onClick={handleProfileClick}>Profile</DropdownMenuItem>
             <DropdownMenuItem onClick={() => navigate("/settings")}>Settings</DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem onClick={() => navigate("/login")}>Log out</DropdownMenuItem>
