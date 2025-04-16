@@ -59,7 +59,7 @@ const ProfilePage = () => {
                 </div>
                 <div className="flex items-center gap-2 text-sm">
                   <Phone className="h-4 w-4 text-muted-foreground" />
-                  <span>+91 98765 43210</span>
+                  <span>+91 9958179363</span>
                 </div>
                 <div className="flex items-center gap-2 text-sm">
                   <Building className="h-4 w-4 text-muted-foreground" />
@@ -120,7 +120,7 @@ const ProfilePage = () => {
                     <Label htmlFor="phone">Phone Number</Label>
                     <Input 
                       id="phone"
-                      defaultValue="+91 98765 43210"
+                      defaultValue="+91 9958179363"
                       disabled={!isEditing}
                     />
                   </div>
