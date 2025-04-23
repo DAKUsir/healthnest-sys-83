@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -40,10 +39,12 @@ const DoctorsPage = () => {
   );
 
   const handleAddNewDoctor = () => {
+    console.log("Add new doctor button clicked");
     navigate("/doctors/new");
   };
 
   const handleViewDoctor = (id: string) => {
+    console.log("View doctor button clicked for id:", id);
     navigate(`/doctors/${id}`);
   };
 
@@ -64,7 +65,7 @@ const DoctorsPage = () => {
     <div className="space-y-6">
       <div className="flex flex-col space-y-2 sm:flex-row sm:items-center sm:justify-between sm:space-y-0">
         <h1 className="text-2xl font-semibold">Doctors</h1>
-        <Button onClick={handleAddNewDoctor}>
+        <Button onClick={handleAddNewDoctor} type="button">
           <Plus className="mr-2 h-4 w-4" />
           Add New Doctor
         </Button>
@@ -172,6 +173,7 @@ const DoctorsPage = () => {
                     size="sm"
                     className="mt-4 w-full"
                     onClick={() => handleViewDoctor(doctor.id)}
+                    type="button"
                   >
                     View Profile
                   </Button>
